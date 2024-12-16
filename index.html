@@ -8,12 +8,54 @@
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap');
 
         :root {
-            --bg-dark: #0d1117;
-            --text-primary: #c9d1d9;
-            --accent-color: #58a6ff;
-            --code-bg: #161b22;
-            --border-color: #30363d;
+        /* Dark Mode (Default) */
+        --bg-dark: #0d1117;
+        --text-primary: #c9d1d9;
+        --accent-color: #58a6ff;
+        --code-bg: #161b22;
+        --border-color: #30363d;
         }
+        /* Light Mode Colors */
+    .light-mode {
+        --bg-dark: #ffffff;
+        --text-primary: #24292e;
+        --accent-color: #0366d6;
+        --code-bg: #f6f8fa;
+        --border-color: #e1e4e8;
+    }
+    .mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        z-index: 1000;
+    }
+    .mode-toggle:hover {
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+    }
+
+    .mode-toggle svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--bg-dark);
+        fill: none;
+        stroke-width: 2;
+        transition: transform 0.3s;
+    }
+
+    .mode-toggle.dark-mode svg {
+        transform: rotate(180deg);
+    }
 
         * {
             margin: 0;
@@ -78,7 +120,7 @@
         }
 
         .avatar:before {
-            content: 'Mo';
+            content: '</>';
             font-size: 80px;
             color: rgba(255,255,255,0.1);
             position: absolute;
@@ -166,29 +208,6 @@
             margin-bottom: 10px;
         }
 
-        @media (hover: none) {
-            .portfolio:hover, .avatar:hover, .contact-link:hover, .skill:hover, .project:hover {
-                transform: none;
-            }
-
-            .avatar:active {
-                transform: scale(1.05) rotate(3deg);
-            }
-
-            .contact-link:active {
-                transform: scale(1.2);
-            }
-
-            .skill:active {
-                background-color: var(--accent-color);
-                color: var(--bg-dark);
-            }
-
-            .project:active {
-                transform: translateX(10px);
-            }
-        }
-
         @media (max-width: 768px) {
             .portfolio {
                 grid-template-columns: 1fr;
@@ -212,6 +231,19 @@
 </head>
 <body>
     <div class="portfolio">
+        <div class="mode-toggle dark-mode">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+        </div>
         <div class="sidebar">
             <div class="avatar">
                 <img src="200-200.jpg" alt="Mo Ibrahim">
@@ -265,5 +297,27 @@
             </div>
         </div>
     </div>
+    <script>
+        const modeToggle = document.querySelector('.mode-toggle');
+        const body = document.body;
+    
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            modeToggle.classList.toggle('dark-mode');
+            
+            // Save user preference to localStorage
+            const currentMode = body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('portfolioMode', currentMode);
+        });
+    
+        // Check user's previous preference on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('portfolioMode');
+            if (savedMode === 'light') {
+                body.classList.add('light-mode');
+                modeToggle.classList.remove('dark-mode');
+            }
+        });
+    </script>
 </body>
 </html>
