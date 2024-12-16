@@ -166,6 +166,29 @@
             margin-bottom: 10px;
         }
 
+        @media (hover: none) {
+            .portfolio:hover, .avatar:hover, .contact-link:hover, .skill:hover, .project:hover {
+                transform: none;
+            }
+
+            .avatar:active {
+                transform: scale(1.05) rotate(3deg);
+            }
+
+            .contact-link:active {
+                transform: scale(1.2);
+            }
+
+            .skill:active {
+                background-color: var(--accent-color);
+                color: var(--bg-dark);
+            }
+
+            .project:active {
+                transform: translateX(10px);
+            }
+        }
+
         @media (max-width: 768px) {
             .portfolio {
                 grid-template-columns: 1fr;
