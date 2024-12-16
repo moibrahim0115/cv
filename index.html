@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap');
@@ -72,7 +73,7 @@
             transition: transform 0.3s ease;
         }
 
-        .avatar:hover {
+        .avatar:hover, .avatar:active {
             transform: scale(1.05) rotate(3deg);
         }
 
@@ -96,7 +97,7 @@
             transition: transform 0.2s ease;
         }
 
-        .contact-link:hover {
+        .contact-link:hover, .contact-link:active {
             transform: scale(1.2);
         }
 
@@ -140,7 +141,7 @@
             transition: all 0.3s ease;
         }
 
-        .skill:hover {
+        .skill:hover, .skill:active {
             background-color: var(--accent-color);
             color: var(--bg-dark);
         }
@@ -156,7 +157,7 @@
             border-bottom: none;
         }
 
-        .project:hover {
+        .project:hover, .project:active {
             transform: translateX(10px);
         }
 
@@ -168,6 +169,20 @@
         @media (max-width: 768px) {
             .portfolio {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .avatar {
+                width: 150px;
+                height: 150px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .contact-links {
+                flex-direction: column;
             }
         }
     </style>
@@ -176,17 +191,16 @@
     <div class="portfolio">
         <div class="sidebar">
             <div class="avatar">
-                <img src="200-200.jpg" alt="Mo Ibrahim"></div>
+                <img src="200-200.jpg" alt="Mo Ibrahim">
+            </div>
             <h1>Mo Ibrahim</h1>
             <p>Software Engineer</p>
-            
             <div class="contact-links">
                 <a href="https://github.com/moibrahim0115" class="contact-link">GitHub</a>
-                <a href="linkedin.com/in/mo-ibrahim-9b7192265" class="contact-link">LinkedIn</a>
+                <a href="http://linkedin.com/in/yzn-mohamed-9b7192265" class="contact-link">LinkedIn</a>
                 <a href="mailto:moibrahim115@outlook.com" class="contact-link">Email</a>
             </div>
         </div>
-        
         <div class="main-content">
             <div class="section">
                 <h2 class="section-title">About Me</h2>
@@ -196,9 +210,8 @@
                       My full-stack experience allows me to collaborate seamlessly with back-end teams and ensure
                        optimal performance and functionality. I'm always eager to learn and explore emerging trends 
                        in the front-end development landscape."
-                    </p>
+                </p>
             </div>
-            
             <div class="section">
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills">
@@ -216,7 +229,6 @@
                     <span class="skill">Docker</span>
                 </div>
             </div>
-            
             <div class="section">
                 <h2 class="section-title">Education</h2>
                 <div class="project">
@@ -227,8 +239,6 @@
                     <h3 class="project-title">Graduate studies</h3>
                     <p>Postgraduate Diploma in Software Engineering from Cairo University.</p>
                 </div>
-            </div>
-            
             </div>
         </div>
     </div>
