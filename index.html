@@ -337,7 +337,8 @@
         }
 
         .hero-image img {
-            max-width: 100%;
+           max-width: 100%;
+            height: auto;
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-lg);
             transition: var(--transition);
@@ -972,6 +973,15 @@
             .contact-container {
                 grid-template-columns: 1fr;
             }
+            .hero-image {
+                text-align: center; /* توسيط الصورة */
+            }
+            .hero-image img {
+                max-width: 80%; /* تقليل العرض قليلاً لتناسب الشاشة مع هامش مريح */
+                margin: 0 auto; /* توسيط الصورة أفقيًا */
+                display: block; /* التأكد من أن الصورة تعامل ككتلة */
+            }
+            
             .hero-content {
                 max-width: 100%;
                 text-align: center;
@@ -998,6 +1008,13 @@
         @media (max-width: 768px) {
             .mobile-toggle {
                 display: block;
+            }
+            .hero-image img {
+                max-width: 90%; /* زيادة العرض قليلاً للشاشات الصغيرة جدًا */
+            }
+            .hero-image::before,
+            .hero-image::after {
+                display: none; /* إخفاء العناصر الزخرفية التي قد تتداخل مع الصورة */
             }
             .nav-links {
                 position: fixed;
