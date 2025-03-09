@@ -337,8 +337,7 @@
         }
 
         .hero-image img {
-           max-width: 100%;
-            height: auto;
+            max-width: 100%;
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-lg);
             transition: var(--transition);
@@ -973,15 +972,6 @@
             .contact-container {
                 grid-template-columns: 1fr;
             }
-            .hero-image {
-                text-align: center; /* توسيط الصورة */
-            }
-            .hero-image img {
-                max-width: 80%; /* تقليل العرض قليلاً لتناسب الشاشة مع هامش مريح */
-                margin: 0 auto; /* توسيط الصورة أفقيًا */
-                display: block; /* التأكد من أن الصورة تعامل ككتلة */
-            }
-            
             .hero-content {
                 max-width: 100%;
                 text-align: center;
@@ -1008,13 +998,6 @@
         @media (max-width: 768px) {
             .mobile-toggle {
                 display: block;
-            }
-            .hero-image img {
-                max-width: 90%; /* زيادة العرض قليلاً للشاشات الصغيرة جدًا */
-            }
-            .hero-image::before,
-            .hero-image::after {
-                display: none; /* إخفاء العناصر الزخرفية التي قد تتداخل مع الصورة */
             }
             .nav-links {
                 position: fixed;
@@ -1250,7 +1233,7 @@
                 </div>
                 <div class="project-card" data-category="web">
                     <div class="project-image">
-                        <img src="voss web.png" alt="website 'VOSS'">
+                        <img src="/voss web.png" alt="website 'VOSS'">
                         <div class="project-overlay">
                             <a href="https://bigbo22115.github.io/voss/" target="_blank" class="project-link" aria-label="Preview">
                                 <i class="fas fa-eye"></i>
