@@ -1509,6 +1509,34 @@
             }
         }
 
+        /* Contact Section - Less transparent */
+        #contact .neon-border {
+            background: rgba(26, 31, 39, 0.97); /* زيادة التعتيم في قسم الاتصال */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--matrix-green, rgba(92, 186, 143, 0.4));
+        }
+
+        /* Light theme contact section */
+        [data-theme="light"] #contact .neon-border {
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid var(--matrix-green, rgba(61, 138, 104, 0.4));
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Enhanced form input visibility */
+        #contact .form-control {
+            background-color: rgba(15, 20, 25, 0.9);
+            border: 1px solid var(--matrix-green, rgba(92, 186, 143, 0.4));
+        }
+
+        /* Enhanced form input visibility - Light theme */
+        [data-theme="light"] #contact .form-control {
+            background-color: rgba(240, 245, 250, 0.95);
+            border: 1px solid rgba(61, 138, 104, 0.3);
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body data-theme="dark" onload="createMatrixEffect()">
@@ -1896,6 +1924,128 @@
         
         // Theme Toggle Logic
         const themeToggle = document.querySelector('.theme-toggle');
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        function updateThemeIcon(theme) {
+            const themeIcon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+        
+        updateThemeIcon(theme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        // Mobile Menu Toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const closeMenu = document.querySelector('.close-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+        
+        // Sections Menu Toggle
+        const sectionsMenuBtn = document.querySelector('.sections-menu-btn');
+        const sectionsDropdown = document.querySelector('.sections-dropdown');
+        
+        sectionsMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sectionsDropdown.classList.toggle('active');
+        });
+        
+        // Close sections dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sectionsMenuBtn.contains(e.target) && !sectionsDropdown.contains(e.target)) {
+                sectionsDropdown.classList.remove('active');
+            }
+        });
+        
+        // Handle active section highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-link');
+        const sectionLinks = document.querySelectorAll('.section-link');
+        
+        function highlightActiveSection() {
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    // Update navbar links
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${sectionId}`) {
+                            item.classList.add('active');
+                        }
+                    });
+                    
+                    // Update sections dropdown links
+                    sectionLinks.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${sectionId}`) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', highlightActiveSection);
+        
+        // Scroll to section when clicking section link
+        sectionLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                sectionsDropdown.classList.remove('active');
+            });
+        });
+        
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Handle navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>
