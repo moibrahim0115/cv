@@ -1814,7 +1814,13 @@
 
                     <div class="neon-border contact-form">
                         <h3 class="form-title cyber-header" style="margin-bottom: 2rem; font-size: 1.3rem;">Transmit Message</h3>
-                        <form id="contactForm" onsubmit="submitForm(event)">
+                        <form id="contactForm" action="https://formsubmit.co/moibrahim115@outlook.com" method="POST">
+                            <!-- حقول مخفية لإعدادات FormSubmit -->
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_subject" value="New Message from Portfolio Website">
+                            <input type="text" name="_honey" style="display:none">
+                            
                             <div class="form-group">
                                 <label for="name" class="form-label">Identifier [Name]</label>
                                 <input type="text" id="name" name="name" class="form-control" required>
@@ -2058,33 +2064,117 @@
             }
         });
 
-        // Function to handle form submission
-        function submitForm(event) {
-            event.preventDefault();
+        // تنظيف كود JavaScript للنموذج
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
             
+            if (contactForm) {
+                // تحديد زر الإرسال مسبقاً
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.innerHTML;
+                
+                // إلغاء السلوك الافتراضي واستخدام AJAX بدلاً من ذلك
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // عرض مؤشر التحميل بأسلوب أوضح
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Sending...';
+                    submitButton.disabled = true;
+                    submitButton.style.backgroundColor = 'var(--matrix-green)';
+                    submitButton.style.color = 'var(--bg-dark)';
+                    submitButton.style.opacity = '0.8';
+                    
+                    // إضافة تأخير مقصود قبل الإرسال (للتأكد من ظهور حالة التحميل)
+                    setTimeout(() => {
+                        // إنشاء كائن FormData
+                        const formData = new FormData(contactForm);
+                        
+                        // إرسال البيانات
+                        fetch('https://formsubmit.co/moibrahim115@outlook.com', {
+                            method: 'POST',
+                            body: formData,
+                            mode: 'no-cors'
+                        })
+                        .then(response => {
+                            // إظهار رسالة النجاح
+                            showSuccessMessage();
+                            // إعادة تعيين النموذج
+                            contactForm.reset();
+                        })
+                        .catch(error => {
+                            // إظهار رسالة الخطأ
+                            showErrorMessage(error);
+                            console.error('Error:', error);
+                        })
+                        .finally(() => {
+                            // استعادة زر الإرسال إلى حالته الطبيعية بعد تأخير أطول
+                            setTimeout(() => {
+                                submitButton.innerHTML = originalButtonText;
+                                submitButton.disabled = false;
+                                submitButton.style.backgroundColor = '';
+                                submitButton.style.color = '';
+                                submitButton.style.opacity = '';
+                            }, 1000); // تأخير أطول
+                        });
+                    }, 300); // تأخير قبل الإرسال لإظهار حالة التحميل
+                });
+            }
+        });
+
+        // وظيفة لإظهار رسالة النجاح
+        function showSuccessMessage() {
+            // إنشاء عنصر رسالة النجاح
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.style.backgroundColor = 'rgba(92, 186, 143, 0.1)';
+            successMessage.style.color = 'var(--matrix-green)';
+            successMessage.style.padding = '15px';
+            successMessage.style.borderRadius = 'var(--border-radius)';
+            successMessage.style.marginTop = '20px';
+            successMessage.style.border = '1px solid var(--matrix-green)';
+            successMessage.style.textAlign = 'center';
+            successMessage.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 10px;"></i> Message sent successfully! We will respond to you as soon as possible.';
+            
+            // إضافة الرسالة إلى النموذج
             const form = document.getElementById('contactForm');
-            const formData = new FormData(form);
+            form.parentNode.insertBefore(successMessage, form.nextSibling);
             
-            // Add FormSubmit.co specific fields
-            formData.append('_subject', 'رسالة جديدة من موقعك الشخصي');
-            formData.append('_template', 'table');
-            formData.append('_captcha', 'false');
+            // إزالة الرسالة بعد 5 ثوان
+            setTimeout(() => {
+                successMessage.style.opacity = '0';
+                successMessage.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 500);
+            }, 5000);
+        }
+
+        // وظيفة لإظهار رسالة الخطأ
+        function showErrorMessage(error) {
+            // إنشاء عنصر رسالة الخطأ
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.style.backgroundColor = 'rgba(231, 76, 60, 0.1)';
+            errorMessage.style.color = '#E74C3C';
+            errorMessage.style.padding = '15px';
+            errorMessage.style.borderRadius = 'var(--border-radius)';
+            errorMessage.style.marginTop = '20px';
+            errorMessage.style.border = '1px solid #E74C3C';
+            errorMessage.style.textAlign = 'center';
+            errorMessage.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i> An error occurred while sending your message. Please try again later.';
             
-            // Send form data to FormSubmit.co
-            fetch('https://formsubmit.co/moibrahim115@outlook.com', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                // Show thank you alert
-                alert('Thank You! Your message has been sent successfully.');
-                // Reset form
-                form.reset();
-            })
-            .catch(error => {
-                alert('Error sending message. Please try again later.');
-                console.error('Error:', error);
-            });
+            // إضافة الرسالة إلى النموذج
+            const form = document.getElementById('contactForm');
+            form.parentNode.insertBefore(errorMessage, form.nextSibling);
+            
+            // إزالة الرسالة بعد 5 ثوان
+            setTimeout(() => {
+                errorMessage.style.opacity = '0';
+                errorMessage.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 500);
+            }, 5000);
         }
     </script>
 </body>
