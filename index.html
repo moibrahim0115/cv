@@ -1814,7 +1814,15 @@
 
                     <div class="neon-border contact-form">
                         <h3 class="form-title cyber-header" style="margin-bottom: 2rem; font-size: 1.3rem;">Transmit Message</h3>
-                        <form id="contactForm">
+                        <form id="contactForm" action="https://formsubmit.co/moibrahim115@outlook.com" method="POST">
+                            <!-- رموز حماية من السبام وإعدادات إضافية -->
+                            <input type="hidden" name="_subject" value="رسالة جديدة من موقعك الشخصي">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_next" value="thankyou.html">
+                            <!-- منع حقول معينة من الظهور (مثل المكرر) -->
+                            <input type="text" name="_honey" style="display:none">
+                            
                             <div class="form-group">
                                 <label for="name" class="form-label">Identifier [Name]</label>
                                 <input type="text" id="name" name="name" class="form-control" required>
@@ -1829,7 +1837,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="message" class="form-label">Data Packet [Message]</label>
-                                <textarea id="message" name="message" class="form-control" required></textarea>
+                                <textarea id="message" name="message" class="form-control" rows="6" required></textarea>
                             </div>
                             <button type="submit" class="btn" style="width: 100%;">Send Transmission</button>
                         </form>
