@@ -116,7 +116,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
+            opacity: 0.05;
             background-image:
                 linear-gradient(to bottom,
                     transparent 95%,
@@ -1450,11 +1450,75 @@
             border-color: var(--cyber-blue);
         }
 
+        /* Add Matrix Canvas for advanced effects */
+        .matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.09;
+            pointer-events: none;
+        }
+
+        /* Improved Matrix Effect */
+        .matrix-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Increased z-index */
+            overflow: hidden;
+            background-color: transparent;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 28px; /* Larger font size */
+            font-weight: bold;
+            line-height: 1;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green); /* Stronger glow */
+            transform: translateY(-100%); /* Add this back */
+            animation: matrix-fall 15s linear infinite;
+            opacity: 0.9; /* Higher initial opacity */
+        }
+
+        @keyframes matrix-fall {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            95% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
     </style>
 </head>
-<body data-theme="dark">
-    <div class="matrix-bg"></div>
-    <div class="binary-rain"></div>
+<body data-theme="dark" onload="createMatrixEffect()">
+    <!-- Matrix Effect Container -->
+    <div class="matrix-effect" id="matrixEffect"></div>
+
+    <!-- Remove competing background elements -->
+    <!-- <div class="matrix-bg"></div> -->
+    <!-- <div class="binary-rain"></div> -->
+    <!-- <div class="matrix-canvas"></div> -->
 
     <!-- Navbar -->
     <nav class="navbar">
@@ -1768,303 +1832,70 @@
 
 
     <script>
-        // Theme Toggle Logic
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        const themeIcon = themeToggle.querySelector('i');
-
-        // Function to set theme
-        const setTheme = (theme) => {
-            body.setAttribute('data-theme', theme);
-            if (theme === 'dark') {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                localStorage.setItem('portfolioTheme', 'dark');
-            } else {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                localStorage.setItem('portfolioTheme', 'light');
-            }
-        };
-
-        // Check saved theme or system preference
-        const savedTheme = localStorage.getItem('portfolioTheme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        // Set initial theme
-        setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
-
-        // Toggle theme on click
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-        });
-
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('portfolioTheme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-
-        // --- Mobile Menu ---
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        const closeMenu = document.querySelector('.close-menu');
-        const navLinks = document.querySelector('.nav-links');
-        const navLinkItems = document.querySelectorAll('.nav-link');
-
-        // Toggle mobile menu
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-        });
-
-        // Close mobile menu
-        closeMenu.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            document.body.style.overflow = ''; // Re-enable scrolling
-        });
-
-        // Close menu when clicking on a link
-        navLinkItems.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    document.body.style.overflow = ''; // Re-enable scrolling
-                }
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (navLinks.classList.contains('active') &&
-                !navLinks.contains(event.target) &&
-                !mobileToggle.contains(event.target)) {
-                navLinks.classList.remove('active');
-                document.body.style.overflow = ''; // Re-enable scrolling
-            }
-        });
-
-        // --- Smooth Scrolling & Active Link Highlighting ---
-        const navbar = document.querySelector('.navbar');
-        const sections = document.querySelectorAll('section[id]');
-
-        const smoothScrollTo = (targetElement) => {
-            if (targetElement && navbar) {
-                const headerHeight = navbar.offsetHeight;
-                const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            }
-        };
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                 if (targetId && targetId.length > 1) {
-                     const targetElement = document.querySelector(targetId);
-                     if (targetElement) {
-                          e.preventDefault();
-                          smoothScrollTo(targetElement);
-                         if (navLinks?.classList.contains('active')) {
-                             navLinks.classList.remove('active');
-                             const icon = mobileToggle?.querySelector('i');
-                              icon?.classList.add('fa-bars');
-                              icon?.classList.remove('fa-times');
-                         }
-                     }
-                 }
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            let currentSectionId = '';
-            const scrollPosition = window.pageYOffset;
-            const headerHeight = navbar?.offsetHeight || 0;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - headerHeight - 50;
-                const sectionBottom = sectionTop + section.offsetHeight;
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    currentSectionId = section.getAttribute('id');
-                }
-            });
-
-             navLinkItems.forEach(item => {
-                 item.classList.remove('active');
-                if (item.getAttribute('href') === `#${currentSectionId}` || (!currentSectionId && item.getAttribute('href') === '#home' && scrollPosition < 200)) {
-                    item.classList.add('active');
-                 }
-            });
-
-            if (navbar) {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            }
-        }, { passive: true });
-
-        // --- Hologram Card Mouse Effect --- (Intensity remains high)
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.hologram-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - (rect.left + rect.width / 2);
-                const y = e.clientY - (rect.top + rect.height / 2);
-                const intensity = 120;
-                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-                if(isVisible){
-                    card.style.transform = `
-                        perspective(1000px)
-                        rotateX(${-y / intensity}deg)
-                        rotateY(${x / intensity}deg)
-                        scale(1.0)
-                    `;
-                    card.style.boxShadow = `
-                        ${x / (intensity * 5)}px ${y / (intensity * 5)}px 10px rgba(0, 160, 176, 0.1), /* Dynamic subtle */
-                        0 2px 8px rgba(0, 0, 0, 0.2) /* Base shadow */
-                    `;
-                }
-            });
-        });
-
-         document.querySelectorAll(".hologram-card").forEach(card => {
-             card.addEventListener("mouseleave", () => {
-                  card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-                  card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
-             });
-         });
-
-        // --- Binary Rain Generation ---
-        function generateBinaryRain() {
-            const container = document.querySelector('.binary-rain');
+        // Create matrix effect with fewer characters
+        function createMatrixEffect() {
+            const container = document.getElementById('matrixEffect');
             if (!container) return;
-            container.innerHTML = '';
-            const binaryChars = '01';
-            const streamDensity = window.innerWidth < 768 ? 20 : 30;
-            const streamCount = Math.floor(window.innerWidth / streamDensity);
-
-            for (let i = 0; i < streamCount; i++) {
-                const stream = document.createElement('div');
-                stream.classList.add('binary-char');
-                stream.style.left = `${Math.random() * 100}%`;
-                stream.style.top = `${Math.random() * -100}vh`;
-                const fallDuration = Math.random() * 7 + 6;
-                const delay = Math.random() * 10;
-                stream.style.animationDuration = `${fallDuration}s`;
-                stream.style.animationDelay = `${delay}s`;
-                let binaryString = '';
-                const stringLength = Math.floor(Math.random() * 18) + 12;
-                for (let j = 0; j < stringLength; j++) {
-                    binaryString += binaryChars[Math.floor(Math.random() * 2)];
+            
+            // Limit total elements to prevent performance issues
+            const columns = container.querySelectorAll('.matrix-column');
+            if (columns.length > 200) { // Reduced from 500 to 200
+                for (let i = 0; i < 10; i++) {
+                    if (columns[i]) columns[i].remove();
                 }
-                stream.textContent = binaryString;
-                container.appendChild(stream);
+            }
+            
+            // Create new columns (add to existing) - reduced amount
+            const chars = "Free Palestine"; // Changed from Mohamed Ibrahim to Free Palestine
+            const newColumns = 5; // Reduced from 10 to 5 for lower density
+            
+            for (let i = 0; i < newColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                
+                // Random character from full name
+                column.textContent = chars[Math.floor(Math.random() * chars.length)];
+                
+                // Position randomly across the screen with more spacing
+                column.style.left = `${Math.random() * window.innerWidth}px`;
+                
+                // Some start visible immediately
+                if (Math.random() > 0.7) {
+                    column.style.transform = `translateY(${Math.random() * 50}vh)`;
+                }
+                
+                // Slower animation for reduced visual density
+                column.style.animationDelay = `${Math.random() * 3}s`;
+                column.style.animationDuration = `${15 + Math.random() * 10}s`; // Longer animation duration
+                
+                // Alternate colors for visual interest
+                if (Math.random() > 0.5) {
+                    column.style.color = 'var(--cyber-blue)';
+                    column.style.textShadow = '0 0 15px var(--cyber-blue)';
+                } else {
+                    column.style.color = 'var(--matrix-green)';
+                    column.style.textShadow = '0 0 15px var(--matrix-green)';
+                }
+                
+                container.appendChild(column);
             }
         }
-        document.addEventListener('DOMContentLoaded', generateBinaryRain);
-         let resizeTimer;
-         window.addEventListener('resize', () => {
-             clearTimeout(resizeTimer);
-             resizeTimer = setTimeout(generateBinaryRain, 300);
-         });
-
-        // --- Scroll to Top Button ---
-        const scrollTopBtn = document.querySelector('.scroll-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn?.classList.add('show');
-            } else {
-                scrollTopBtn?.classList.remove('show');
-            }
-        }, { passive: true });
-
-        scrollTopBtn?.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Call immediately on page load
+        createMatrixEffect();
+        
+        // Call less frequently for reduced density
+        setInterval(createMatrixEffect, 2000); // Increased from 1000ms to 2000ms
+        
+        // Ensure it runs after load with fewer batches
+        window.addEventListener('load', function() {
+            createMatrixEffect();
+            // Add just one more batch after initial
+            setTimeout(createMatrixEffect, 1000);
         });
-
-        // --- Contact Form Submission (Placeholder) ---
-        const contactForm = document.getElementById('contactForm');
-        contactForm?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Transmission Sent! (Placeholder - Form submission logic needed)');
-            contactForm.reset();
-        });
-
-        // --- Simple Fade-in Animation on Scroll (Optional) ---
-         const fadeElements = document.querySelectorAll('.section > .container > *:not(.cyber-header), .project-card, .education-card, .hero-image-container');
-         const fadeObserver = new IntersectionObserver((entries, observer) => {
-             entries.forEach(entry => {
-                 if (entry.isIntersecting) {
-                     entry.target.style.opacity = '1';
-                     entry.target.style.transform = 'translateY(0)';
-                     observer.unobserve(entry.target);
-                 }
-             });
-         }, {
-             threshold: 0.1,
-             rootMargin: '0px 0px -40px 0px'
-         });
-         fadeElements.forEach(el => {
-             el.style.opacity = '0';
-             el.style.transform = 'translateY(25px)';
-             el.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
-             fadeObserver.observe(el);
-         });
-
-        // --- Sections Menu Logic ---
-        const sectionsMenuBtn = document.querySelector('.sections-menu-btn');
-        const sectionsDropdown = document.querySelector('.sections-dropdown');
-        const sectionLinks = document.querySelectorAll('.section-link');
-
-        // Toggle sections dropdown
-        sectionsMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sectionsDropdown.classList.toggle('active');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (sectionsDropdown.classList.contains('active') && 
-                !sectionsDropdown.contains(e.target) && 
-                !sectionsMenuBtn.contains(e.target)) {
-                sectionsDropdown.classList.remove('active');
-            }
-        });
-
-        // Close dropdown when clicking on a section link
-        sectionLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                sectionsDropdown.classList.remove('active');
-            });
-        });
-
-        // Update active section in dropdown
-        window.addEventListener('scroll', () => {
-            let currentSectionId = '';
-            const scrollPosition = window.pageYOffset;
-            const headerHeight = navbar?.offsetHeight || 0;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - headerHeight - 50;
-                const sectionBottom = sectionTop + section.offsetHeight;
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    currentSectionId = section.getAttribute('id');
-                }
-            });
-
-            // Update active state in section links
-            sectionLinks.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === `#${currentSectionId}` || 
-                    (!currentSectionId && item.getAttribute('href') === '#home' && scrollPosition < 200)) {
-                    item.classList.add('active');
-                }
-            });
-        }, { passive: true });
-
+        
+        // Theme Toggle Logic
+        const themeToggle = document.querySelector('.theme-toggle');
     </script>
 </body>
 </html>
