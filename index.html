@@ -923,12 +923,23 @@
 
         /* Footer */
         .footer {
-            background-color: var(--bg-card);
+            background-color: rgba(26, 31, 39, 0.92);
             padding: 4rem 0 2rem;
-            border-top: 1px solid rgba(0, 255, 136, 0.2);
-            margin-top: 4rem; /* Space before footer */
+            border-top: 1px solid rgba(92, 186, 143, 0.35);
+            margin-top: 4rem;
             text-align: center;
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
+
+        /* Light theme footer with subtle transparency */
+        [data-theme="light"] .footer {
+            background: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid rgba(61, 138, 104, 0.3);
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.1);
+        }
+
         .footer-logo { /* Simple text logo */
              font-size: 1.3rem;
              font-weight: 700;
