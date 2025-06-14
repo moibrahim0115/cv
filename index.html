@@ -1440,14 +1440,12 @@
             text-align: center;
         }
 
+
+
         /* Show sections button on mobile */
         @media (max-width: 768px) {
             .sections-menu-btn {
                 display: flex;
-            }
-            
-            .theme-toggle {
-                margin-left: 0;
             }
         }
 
@@ -1460,6 +1458,8 @@
             background: rgba(255, 255, 255, 0.95);
             border-color: var(--cyber-blue);
         }
+
+
 
         /* Add Matrix Canvas for advanced effects */
         .matrix-canvas {
@@ -1548,18 +1548,496 @@
             border: 1px solid rgba(61, 138, 104, 0.3);
             color: var(--text-primary);
         }
+
+        /* Mute Toggle */
+        .mute-toggle {
+            background: rgba(26, 31, 39, 0.6);
+            border: 2px solid var(--matrix-green);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(92, 186, 143, 0.3);
+            margin-left: 0.5rem;
+            z-index: 210;
+        }
+
+        .mute-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 0 10px rgba(92, 186, 143, 0.5);
+        }
+
+        .mute-toggle i {
+            font-size: 1.1rem;
+            color: var(--matrix-green);
+            transition: all 0.3s ease;
+        }
+
+        .mute-toggle.muted {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+
+        .mute-toggle.muted:hover {
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .mute-toggle.muted i {
+            color: #ff6b6b;
+        }
+
+        /* Mobile Responsive Design - Improved */
+        /* تم حذف الكود القديم المكرر */
+
+        @keyframes slideInMobile {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Mobile Navbar - Consistent with Desktop Design */
+        @media (max-width: 768px) {
+            .navbar {
+                background: rgba(10, 15, 20, 0.85);
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid rgba(92, 186, 143, 0.2);
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+                height: 70px;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                transition: all 0.3s ease;
+            }
+
+            .navbar.scrolled {
+                background: rgba(10, 15, 20, 0.95);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                border-bottom: 1px solid rgba(92, 186, 143, 0.3);
+            }
+
+            .navbar-container {
+                padding: 0 1.5rem;
+                height: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 100%;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--matrix-green);
+                text-shadow: 0 0 6px var(--matrix-green);
+                flex-shrink: 0;
+                letter-spacing: 0.5px;
+                position: relative;
+                padding-left: 0.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .logo::before {
+                content: '>';
+                position: absolute;
+                left: -2px;
+                top: 0;
+                color: var(--cyber-blue);
+                animation: blink 1s step-end infinite;
+            }
+
+            .logo:hover {
+                transform: translateY(-1px);
+                text-shadow: 0 0 8px var(--matrix-green);
+            }
+
+            .nav-controls {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                flex-shrink: 0;
+            }
+
+            /* تصميم الأزرار متوافق مع الشاشات الكبيرة */
+            .sections-menu-btn,
+            .mute-toggle,
+            .theme-toggle,
+            .mobile-toggle {
+                background: rgba(26, 31, 39, 0.6);
+                border: 2px solid var(--matrix-green);
+                border-radius: 50%;
+                width: 38px;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 0 5px rgba(92, 186, 143, 0.3);
+                z-index: 210;
+                flex-shrink: 0;
+            }
+
+            /* زر الأقسام بتصميم مميز */
+            .sections-menu-btn {
+                border-color: var(--cyber-blue);
+                box-shadow: 0 0 5px rgba(96, 165, 181, 0.3);
+                border-radius: 8px;
+            }
+
+            .sections-menu-btn i {
+                color: var(--cyber-blue);
+                font-size: 1.1rem;
+            }
+
+            .sections-menu-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 10px rgba(96, 165, 181, 0.5);
+            }
+
+            /* زر كتم الصوت */
+            .mute-toggle i {
+                color: var(--matrix-green);
+                font-size: 1.1rem;
+            }
+
+            .mute-toggle:hover {
+                transform: rotate(15deg) scale(1.1);
+                box-shadow: 0 0 10px rgba(92, 186, 143, 0.5);
+            }
+
+            .mute-toggle.muted {
+                border-color: #ff6b6b;
+                box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+            }
+
+            .mute-toggle.muted i {
+                color: #ff6b6b;
+            }
+
+            .mute-toggle.muted:hover {
+                box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            }
+
+            /* زر القائمة الجانبية */
+            .mobile-toggle {
+                border-radius: 8px;
+            }
+
+            .mobile-toggle i {
+                color: var(--matrix-green);
+                font-size: 1.2rem;
+            }
+
+            .mobile-toggle:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 8px rgba(92, 186, 143, 0.5);
+            }
+
+            /* زر تبديل الوضع */
+            .theme-toggle i {
+                color: var(--matrix-green);
+                font-size: 1.1rem;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg) scale(1.1);
+                box-shadow: 0 0 10px rgba(92, 186, 143, 0.5);
+            }
+
+
+
+            /* Sections dropdown enhanced */
+            .sections-dropdown {
+                position: fixed;
+                top: 80px;
+                right: 1.5rem;
+                width: 200px;
+                background: rgba(15, 18, 22, 0.95);
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+                border: 1px solid var(--cyber-blue);
+                border-radius: 8px;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1002;
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .sections-dropdown.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .section-link {
+                display: block;
+                padding: 0.7rem 1rem;
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+                text-align: left;
+                border-left: 3px solid transparent;
+                text-decoration: none;
+            }
+
+            .section-link:hover,
+            .section-link.active {
+                background: rgba(92, 186, 143, 0.1);
+                color: var(--matrix-green);
+                border-left: 3px solid var(--matrix-green);
+            }
+
+            .section-link i {
+                margin-right: 8px;
+                font-size: 0.9rem;
+                width: 16px;
+                text-align: center;
+            }
+
+            /* Enhanced Mobile Menu */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(15, 18, 22, 0.95);
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                z-index: 1001;
+                transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                padding: 4rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-link {
+                font-size: 1.6rem;
+                font-weight: 600;
+                padding: 1.25rem 2.5rem;
+                border-radius: 16px;
+                background: rgba(92, 186, 143, 0.15);
+                border: 2px solid var(--matrix-green);
+                color: var(--text-primary);
+                text-decoration: none;
+                text-align: center;
+                min-width: 250px;
+                transition: all 0.4s ease;
+                position: relative;
+                overflow: hidden;
+                text-shadow: 0 0 5px rgba(92, 186, 143, 0.3);
+            }
+
+            .nav-link::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(92, 186, 143, 0.2);
+                border-radius: 50%;
+                transition: all 0.4s ease;
+                transform: translate(-50%, -50%);
+                z-index: -1;
+            }
+
+            .nav-link:hover::before {
+                width: 300%;
+                height: 300%;
+            }
+
+            .nav-link:hover {
+                background: rgba(92, 186, 143, 0.25);
+                border-color: rgba(92, 186, 143, 0.8);
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 8px 25px rgba(92, 186, 143, 0.4);
+                color: var(--matrix-green);
+                text-shadow: 0 0 15px rgba(92, 186, 143, 0.8);
+            }
+
+            .nav-link.active {
+                background: rgba(92, 186, 143, 0.3);
+                border-color: var(--matrix-green);
+                color: var(--matrix-green);
+                text-shadow: 0 0 15px rgba(92, 186, 143, 0.8);
+            }
+
+            .close-menu {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                background: rgba(255, 107, 107, 0.2);
+                border: 2px solid #ff6b6b;
+                border-radius: 50%;
+                width: 45px;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: #ff6b6b;
+                font-size: 1.3rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            }
+
+            .close-menu:hover {
+                background: rgba(255, 107, 107, 0.3);
+                transform: rotate(90deg) scale(1.1);
+                box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+            }
+
+            /* Body padding adjustment for fixed navbar */
+            body {
+                padding-top: 70px;
+            }
+            
+            /* Light theme adjustments for mobile */
+            [data-theme="light"] .navbar {
+                background: rgba(245, 247, 250, 0.85);
+                border-bottom: 1px solid rgba(61, 138, 104, 0.15);
+            }
+
+            [data-theme="light"] .navbar.scrolled {
+                background: rgba(245, 247, 250, 0.95);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            [data-theme="light"] .sections-menu-btn,
+            [data-theme="light"] .mute-toggle,
+            [data-theme="light"] .mobile-toggle {
+                background: #ffffff;
+            }
+
+            [data-theme="light"] .sections-dropdown {
+                background: rgba(255, 255, 255, 0.95);
+                border-color: var(--cyber-blue);
+            }
+
+            [data-theme="light"] .nav-links {
+                background: rgba(245, 247, 250, 0.95);
+            }
+
+            [data-theme="light"] .close-menu {
+                background: rgba(255, 107, 107, 0.2);
+                border-color: #ff6b6b;
+                color: #ff6b6b;
+            }
+        }
+
+        @keyframes slideInMobile {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Extra Small Screens (iPhone SE, Galaxy S, etc.) */
+        @media (max-width: 480px) {
+            .navbar-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-controls {
+                gap: 0.8rem;
+            }
+
+            .sections-menu-btn,
+            .mute-toggle,
+            .mobile-toggle {
+                width: 36px;
+                height: 36px;
+            }
+
+            .sections-menu-btn i,
+            .mute-toggle i,
+            .mobile-toggle i {
+                font-size: 1rem;
+            }
+
+            .sections-dropdown {
+                width: calc(100vw - 2rem);
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .nav-link {
+                font-size: 1.4rem;
+                min-width: 200px;
+                padding: 1rem 2rem;
+            }
+
+            body {
+                padding-top: 70px;
+            }
+        }
+
+        /* Tablet Landscape */
+        @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+            .navbar {
+                height: 60px;
+            }
+
+            .navbar-container {
+                padding: 0 2rem;
+            }
+
+            .sections-menu-btn,
+            .mute-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+            body {
+                padding-top: 60px;
+            }
+        }
     </style>
 </head>
 <body data-theme="dark" onload="createMatrixEffect()">
     <!-- Matrix Effect Container -->
-    <div class="matrix-effect" id="matrixEffect"></div>
+    <div id="matrixEffect" class="matrix-effect"></div>
 
-    <!-- Remove competing background elements -->
-    <!-- <div class="matrix-bg"></div> -->
-    <!-- <div class="binary-rain"></div> -->
-    <!-- <div class="matrix-canvas"></div> -->
+    <!-- Background Audio -->
+    <audio id="backgroundAudio" preload="auto" autoplay style="display: none;">
+        <source src="background-sound.mp3" type="audio/mpeg">
+        <source src="background-sound.wav" type="audio/wav">
+        <source src="background-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
 
-    <!-- Navbar -->
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="container navbar-container">
             <div class="logo">
@@ -1594,6 +2072,9 @@
                 </ul>
                 <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
                     <i class="fas fa-moon"></i>
+                </button>
+                <button class="mute-toggle" aria-label="Toggle Audio" title="Toggle Audio">
+                    <i class="fas fa-volume-up"></i>
                 </button>
             </div>
         </div>
@@ -1672,7 +2153,7 @@
                              <img src="fit.png" alt="FitChallenge Project Thumbnail">
                          </div>
                          <div class="project-content">
-                            <h3 class="project-title">FitChallenge System</h3>
+                            <h3 class="project-title">FitChallenge </h3>
                             <div class="project-tags">
                                 <span class="project-tag">HTML</span>
                                 <span class="project-tag">CSS</span>
@@ -1682,10 +2163,30 @@
                              <p class="project-description">Web-based fitness challenge interface hosted on GitHub Pages. Interactive static site using client-side tech.</p>
                             <div class="project-links">
                                 <a href="https://moibrahim0115.github.io/-FitChallenge/" target="_blank" rel="noopener noreferrer" class="btn btn-small">Access Demo</a>
-                                <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_fitnesschallenge-webdevelopment-30daychallenge-activity-7306276039972806658-wao9?utm_source=share&utm_medium=member_desktop" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-small">Details</a>
+                                <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-frontenddevelopment-javascript-activity-7316146792549498880-YKiC?utm_source=share&utm_medium=member_desktop&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-small">Details</a>
                             </div>
                          </div>
                       </div>
+
+                      <!-- Project Card 2: Capital Gardens -->
+                      <div class="hologram-card neon-border project-card">
+                        <div class="project-image">
+                            <img src="anjiz.png" alt="Anjiz - A Thoughtfully Designed Task Management Application">
+                        </div>
+                         <div class="project-content">
+                          <h3 class="project-title">Anjiz - A Thoughtfully Designed Task Management Application</h3>
+                           <div class="project-tags">
+                              <span class="project-tag">HTML</span>
+                              <span class="project-tag">CSS</span>
+                              <span class="project-tag">JavaScript</span>
+                          </div>
+                           <p class="project-description"> modern task management web application that beautifully combines functionality with meaningful purpose. Built with a philosophy rooted in consistency and mindful productivity.</p>
+                           <div class="project-links">
+                              <a href="https://moibrahim0115.github.io/Anjiz/" target="_blank" rel="noopener noreferrer" class="btn btn-small">Access Demo</a>
+                              <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-taskmanagement-productivity-activity-7339552506542206976-sPQF?utm_source=share&utm_medium=member_desktop&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-small">Details</a>
+                          </div>
+                        </div>
+                     </div>
 
                       <!-- Project Card 2: Capital Gardens -->
                        <div class="hologram-card neon-border project-card">
@@ -1693,7 +2194,7 @@
                               <img src="capital.png" alt="Capital Gardens Project Thumbnail">
                           </div>
                            <div class="project-content">
-                            <h3 class="project-title">Capital Gardens Interface</h3>
+                            <h3 class="project-title">Capital Gardens </h3>
                              <div class="project-tags">
                                 <span class="project-tag">HTML</span>
                                 <span class="project-tag">CSS</span>
@@ -1877,6 +2378,105 @@
 
 
     <script>
+        // Play background audio automatically on every page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('backgroundAudio');
+            const muteToggle = document.querySelector('.mute-toggle');
+            
+            if (audio && muteToggle) {
+                // Get saved mute state
+                const isMuted = localStorage.getItem('isMuted') === 'true';
+                
+                // Set initial audio properties
+                audio.volume = 0.3;
+                audio.muted = isMuted;
+                audio.loop = false; // تشغيل مرة واحدة فقط
+                
+                // Update mute button icon based on saved state
+                updateMuteButtonIcon(isMuted);
+                
+                // Function to update mute button appearance
+                function updateMuteButtonIcon(muted) {
+                    if (muted) {
+                        muteToggle.querySelector('i').className = 'fas fa-volume-mute';
+                        muteToggle.classList.add('muted');
+                    } else {
+                        muteToggle.querySelector('i').className = 'fas fa-volume-up';
+                        muteToggle.classList.remove('muted');
+                    }
+                }
+                
+                // Function to attempt audio playback
+                function tryPlayAudio() {
+                    if (!audio.muted) {
+                        audio.currentTime = 0; // إعادة تعيين الوقت للبداية
+                        const playPromise = audio.play();
+                        
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                console.log('Background audio started successfully');
+                            }).catch(error => {
+                                console.log('Audio autoplay prevented by browser:', error);
+                                // إضافة مستمع للتشغيل عند أول تفاعل
+                                addUserInteractionListener();
+                            });
+                        }
+                    }
+                }
+                
+                // Function to add user interaction listener
+                function addUserInteractionListener() {
+                    const events = ['click', 'touchstart', 'keydown'];
+                    
+                    function playOnInteraction() {
+                        if (!audio.muted) {
+                            audio.currentTime = 0;
+                            audio.play().then(() => {
+                                console.log('Audio started after user interaction');
+                            }).catch(e => {
+                                console.log('Audio play failed:', e);
+                            });
+                        }
+                        
+                        // إزالة جميع مستمعات الأحداث
+                        events.forEach(event => {
+                            document.removeEventListener(event, playOnInteraction);
+                        });
+                    }
+                    
+                    // إضافة مستمعات الأحداث لجميع أنواع التفاعل
+                    events.forEach(event => {
+                        document.addEventListener(event, playOnInteraction, { once: true });
+                    });
+                }
+                
+                // Setup mute toggle functionality
+                muteToggle.addEventListener('click', () => {
+                    const newMutedState = !audio.muted;
+                    audio.muted = newMutedState;
+                    localStorage.setItem('isMuted', newMutedState.toString());
+                    updateMuteButtonIcon(newMutedState);
+                    
+                    // If unmuting, try to play audio
+                    if (!newMutedState) {
+                        tryPlayAudio();
+                    }
+                });
+                
+                // محاولة التشغيل فوراً عند تحميل الصفحة
+                setTimeout(() => {
+                    tryPlayAudio();
+                }, 500); // تأخير قصير للتأكد من تحميل الصوت
+                
+                // محاولة أخرى بعد تحميل الصفحة بالكامل
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        tryPlayAudio();
+                    }, 1000);
+                });
+            }
+        });
+
         // Create matrix effect with fewer characters
         function createMatrixEffect() {
             const container = document.getElementById('matrixEffect');
@@ -1946,6 +2546,7 @@
         
         function updateThemeIcon(theme) {
             const themeIcon = themeToggle.querySelector('i');
+            
             if (theme === 'dark') {
                 themeIcon.className = 'fas fa-moon';
             } else {
@@ -1955,14 +2556,16 @@
         
         updateThemeIcon(theme);
         
-        themeToggle.addEventListener('click', () => {
+        function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeIcon(newTheme);
-        });
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
         
         // Mobile Menu Toggle
         const mobileToggle = document.querySelector('.mobile-toggle');
