@@ -406,27 +406,7 @@
             transition: all 0.3s ease;
         }
 
-        .mobile-toggle {
-            display: none;
-            background: rgba(26, 31, 39, 0.6);
-            border: 2px solid var(--matrix-green);
-            border-radius: 8px;
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--matrix-green);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(92, 186, 143, 0.3);
-            z-index: 210;
-        }
 
-        .mobile-toggle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 8px rgba(92, 186, 143, 0.5);
-        }
 
         .close-menu {
             position: absolute;
@@ -459,9 +439,7 @@
                 font-size: 1.1rem;
             }
             
-            .mobile-toggle {
-                display: flex;
-            }
+
             
             .nav-controls {
                 flex-direction: row-reverse;
@@ -598,7 +576,6 @@
             text-shadow: 0 0 3px rgba(61, 138, 104, 0.2);
         }
 
-        [data-theme="light"] .mobile-toggle,
         [data-theme="light"] .close-menu,
         [data-theme="light"] .theme-toggle {
             background: #ffffff;
@@ -1052,15 +1029,7 @@
             }
         }
 
-        /* Add this class to navbar for mobile menu toggle button */
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--matrix-green);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
+
 
         /* Dark mode adjustments for mobile */
         [data-theme="dark"] .nav-links {
@@ -1671,8 +1640,7 @@
             /* تصميم الأزرار متوافق مع الشاشات الكبيرة */
             .sections-menu-btn,
             .mute-toggle,
-            .theme-toggle,
-            .mobile-toggle {
+            .theme-toggle {
                 background: rgba(26, 31, 39, 0.6);
                 border: 2px solid var(--matrix-green);
                 border-radius: 50%;
@@ -1729,20 +1697,7 @@
                 box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
             }
 
-            /* زر القائمة الجانبية */
-            .mobile-toggle {
-                border-radius: 8px;
-            }
 
-            .mobile-toggle i {
-                color: var(--matrix-green);
-                font-size: 1.2rem;
-            }
-
-            .mobile-toggle:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 8px rgba(92, 186, 143, 0.5);
-            }
 
             /* زر تبديل الوضع */
             .theme-toggle i {
@@ -1927,8 +1882,7 @@
             }
 
             [data-theme="light"] .sections-menu-btn,
-            [data-theme="light"] .mute-toggle,
-            [data-theme="light"] .mobile-toggle {
+            [data-theme="light"] .mute-toggle {
                 background: #ffffff;
             }
 
@@ -1974,15 +1928,13 @@
             }
 
             .sections-menu-btn,
-            .mute-toggle,
-            .mobile-toggle {
+            .mute-toggle {
                 width: 36px;
                 height: 36px;
             }
 
             .sections-menu-btn i,
-            .mute-toggle i,
-            .mobile-toggle i {
+            .mute-toggle i {
                 font-size: 1rem;
             }
 
@@ -2045,9 +1997,7 @@
             </div>
 
             <div class="nav-controls">
-                <button class="mobile-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
+
                 <ul class="nav-links">
                     <button class="close-menu" aria-label="Close menu">
                         <i class="fas fa-times"></i>
@@ -2567,18 +2517,7 @@
         
         themeToggle.addEventListener('click', toggleTheme);
         
-        // Mobile Menu Toggle
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        const closeMenu = document.querySelector('.close-menu');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.add('active');
-        });
-        
-        closeMenu.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+
         
         // Sections Menu Toggle
         const sectionsMenuBtn = document.querySelector('.sections-menu-btn');
