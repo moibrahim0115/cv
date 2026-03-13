@@ -167,7 +167,7 @@
             font-size:clamp(3.2rem,8vw,6.5rem);line-height:.9;letter-spacing:-.04em;margin-bottom:.6rem;
         }
         .hero-name .solid{display:block;color:var(--t1)}
-        .hero-name .hollow{display:block;color:transparent;-webkit-text-stroke:1.5px currentColor;opacity:.2;}
+        .hero-name .hollow{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(237,234,226,0.28);}
         .hero-role{font-family:var(--mono);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acid);margin-bottom:2rem;}
         .hero-bio{
             max-width:540px;color:var(--t2);font-size:.96rem;line-height:1.82;
@@ -401,11 +401,302 @@
         .notif.err{background:#f87171;color:#fff}
         .notif.up{opacity:1;transform:translateX(-50%) translateY(0)}
 
+        /* ── ENTERPRISE ─────────────────────────────────────── */
+        #enterprise{background:var(--ink)}
+        .ent-intro{max-width:700px;margin-bottom:3.5rem}
+        .ent-intro p{font-size:.95rem;color:var(--t2);line-height:1.88;margin-bottom:1.5rem}
+        .ent-pills{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.75rem}
+        .ent-pill{
+            display:inline-flex;align-items:center;gap:.45rem;padding:.3rem .82rem;
+            background:var(--ink-card);border:1px solid var(--border);border-radius:99px;
+            font-family:var(--mono);font-size:.67rem;color:var(--t2);
+        }
+        .ent-pill svg{width:11px;height:11px;color:var(--acid)}
+
+        /* grid */
+        .ent-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.75rem}
+
+        /* ── CARD BASE ── */
+        .ec2{
+            background:var(--ink-card);border:1px solid var(--border);
+            border-radius:var(--r-lg);overflow:hidden;
+            display:flex;flex-direction:column;position:relative;
+            transition:border-color .35s,box-shadow .35s,transform .3s var(--ease);
+        }
+        .ec2:hover{
+            border-color:var(--border-hi);transform:translateY(-6px);
+            box-shadow:0 32px 72px rgba(0,0,0,.55);
+        }
+        .ec2-bar{height:4px;background:var(--ec2-bar,linear-gradient(90deg,var(--acid),var(--cyan)));flex-shrink:0}
+
+        /* watermark number */
+        .ec2-num{
+            position:absolute;top:.4rem;left:1.1rem;z-index:0;
+            font-family:var(--display);font-size:5.5rem;font-weight:800;
+            color:rgba(255,255,255,.025);line-height:1;pointer-events:none;user-select:none;
+            transition:color .35s;
+        }
+        .ec2:hover .ec2-num{color:rgba(184,245,102,.055)}
+
+        /* ── CAROUSEL ── */
+        .ec2-carousel{
+            position:relative;aspect-ratio:16/9;overflow:hidden;
+            background:#0c0f14;flex-shrink:0;
+        }
+        .ec2-slide{
+            position:absolute;inset:0;width:100%;height:100%;
+            object-fit:cover;object-position:top center;
+            filter:brightness(.8) saturate(.82);
+            opacity:0;transform:scale(1.04);
+            transition:opacity .65s ease,filter .65s ease,transform .65s ease;
+        }
+        .ec2-slide.active{opacity:1;transform:scale(1)}
+        .ec2:hover .ec2-slide.active{filter:brightness(.95) saturate(1)}
+
+        /* placeholder */
+        .ec2-ph{
+            position:absolute;inset:0;display:none;flex-direction:column;
+            align-items:center;justify-content:center;gap:.8rem;
+        }
+        .ec2-ph::before{
+            content:'';position:absolute;inset:0;
+            background-image:linear-gradient(rgba(184,245,102,.03) 1px,transparent 1px),
+                             linear-gradient(90deg,rgba(184,245,102,.03) 1px,transparent 1px);
+            background-size:30px 30px;
+        }
+        .ec2-ph svg{width:38px;height:38px;position:relative;z-index:1}
+        .ec2-ph span{
+            font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;
+            text-transform:uppercase;position:relative;z-index:1;
+        }
+
+        /* veil */
+        .ec2-veil{
+            position:absolute;inset:0;z-index:3;pointer-events:none;
+            background:linear-gradient(to top,rgba(8,11,16,.85) 0%,rgba(8,11,16,.2) 40%,transparent 100%);
+            display:flex;align-items:flex-end;padding:.8rem 1rem;
+            transition:background .3s;
+        }
+        .ec2:hover .ec2-veil{
+            background:linear-gradient(to top,rgba(8,11,16,.65) 0%,rgba(8,11,16,.06) 35%,transparent 100%);
+        }
+
+        /* live badge */
+        .ec2-live{
+            display:inline-flex;align-items:center;gap:.38rem;
+            font-family:var(--mono);font-size:.57rem;letter-spacing:.09em;text-transform:uppercase;
+            padding:.2rem .58rem;background:rgba(8,11,16,.72);backdrop-filter:blur(8px);
+            border:1px solid rgba(184,245,102,.3);border-radius:99px;color:var(--acid);
+            pointer-events:auto;position:relative;z-index:4;
+        }
+        .ec2-live-dot{
+            width:5px;height:5px;background:var(--acid);border-radius:50%;
+            animation:pulse 2s ease-in-out infinite;
+        }
+
+        /* type tag */
+        .ec2-tag{
+            position:absolute;top:.72rem;right:.72rem;z-index:4;
+            font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;
+            padding:.18rem .52rem;background:rgba(8,11,16,.82);backdrop-filter:blur(4px);
+            border:1px solid rgba(255,255,255,.1);border-radius:3px;color:var(--t2);
+        }
+
+        /* dots */
+        .ec2-dots{
+            position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);
+            display:flex;gap:.4rem;z-index:6;
+            opacity:0;transition:opacity .2s;
+        }
+        .ec2:hover .ec2-dots{opacity:1}
+        .ec2-dot{
+            width:5px;height:5px;border-radius:3px;
+            background:rgba(255,255,255,.25);cursor:pointer;
+            transition:all .25s;border:none;padding:0;flex-shrink:0;
+        }
+        .ec2-dot.active{width:16px;background:var(--acid)}
+
+        /* arrows */
+        .ec2-arrow{
+            position:absolute;top:50%;transform:translateY(-50%);
+            width:30px;height:30px;border-radius:50%;
+            background:rgba(8,11,16,.72);backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,.12);
+            color:rgba(255,255,255,.78);font-size:16px;font-weight:300;
+            display:flex;align-items:center;justify-content:center;
+            z-index:6;cursor:pointer;opacity:0;transition:all .2s;line-height:1;
+        }
+        .ec2:hover .ec2-arrow{opacity:1}
+        .ec2-prev{left:.65rem}
+        .ec2-next{right:.65rem}
+        .ec2-arrow:hover{background:rgba(184,245,102,.18);border-color:rgba(184,245,102,.45);color:var(--acid)}
+
+        /* ── CARD BODY ── */
+        .ec2-body{
+            padding:1.2rem 1.4rem 1.35rem;
+            display:flex;flex-direction:column;gap:.55rem;
+            position:relative;z-index:1;
+        }
+        .ec2-title{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--t1);line-height:1.22}
+        .ec2-desc{font-size:.82rem;color:var(--t2);line-height:1.75}
+        .ec2-meta{
+            display:flex;align-items:center;justify-content:space-between;
+            padding-top:.7rem;border-top:1px solid var(--border);margin-top:auto;
+        }
+        .ec2-year{font-family:var(--mono);font-size:.62rem;color:var(--t2);display:flex;align-items:center;gap:.38rem}
+        .ec2-year svg{width:11px;height:11px;opacity:.4}
+        .ec2-scope{
+            font-family:var(--mono);font-size:.6rem;padding:.16rem .52rem;
+            border-radius:3px;background:var(--ink-raised);color:var(--t2);border:1px solid var(--border);
+        }
+
+        /* ── SLIDE-UP PREVIEW PANEL ── */
+        .ec2-preview{
+            position:absolute;inset:0;z-index:20;
+            display:flex;flex-direction:column;
+            padding:1.5rem 1.55rem 1.4rem;
+            background:linear-gradient(175deg,rgba(8,11,16,.97) 0%,rgba(13,16,25,.99) 100%);
+            transform:translateY(100%);
+            transition:transform .42s cubic-bezier(0.22,1,0.36,1);
+            gap:.8rem;
+        }
+        .ec2:hover .ec2-preview{transform:translateY(0)}
+
+        /* accent line at top matching card gradient */
+        .ec2-preview::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:3px;
+            background:var(--ec2-bar,linear-gradient(90deg,var(--acid),var(--cyan)));
+        }
+        /* subtle grid texture */
+        .ec2-preview::after{
+            content:'';position:absolute;inset:0;pointer-events:none;
+            background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+                             linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+            background-size:28px 28px;
+        }
+
+        .ec2-prev-header{
+            display:flex;align-items:flex-start;justify-content:space-between;
+            position:relative;z-index:1;
+        }
+        .ec2-prev-label{
+            font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;
+            text-transform:uppercase;color:var(--acid);opacity:.75;
+        }
+        .ec2-prev-num{
+            font-family:var(--display);font-size:3rem;font-weight:800;
+            line-height:.9;color:rgba(184,245,102,.08);pointer-events:none;
+            margin-top:-.25rem;
+        }
+        .ec2-prev-name{
+            font-family:var(--display);font-size:.97rem;font-weight:700;
+            color:var(--t1);line-height:1.2;
+            position:relative;z-index:1;
+        }
+        .ec2-preview-features{
+            display:flex;flex-direction:column;gap:0;
+            flex:1;position:relative;z-index:1;
+        }
+        .ec2-pf{
+            display:flex;align-items:flex-start;gap:.65rem;
+            padding:.38rem 0;border-bottom:1px solid rgba(255,255,255,.05);
+            font-size:.77rem;color:rgba(237,234,226,.65);line-height:1.45;
+        }
+        .ec2-pf:last-child{border-bottom:none}
+        .ec2-pf-n{
+            font-family:var(--mono);font-size:.57rem;color:var(--acid);
+            opacity:.55;flex-shrink:0;margin-top:.1rem;min-width:1.1rem;
+        }
+        .ec2-preview-stack{
+            display:flex;flex-wrap:wrap;gap:.32rem;
+            padding-top:.65rem;border-top:1px solid rgba(255,255,255,.07);
+            position:relative;z-index:1;
+        }
+        .ec2ps{font-family:var(--mono);font-size:.6rem;padding:.15rem .5rem;border-radius:3px}
+        .ec2ps.fe{background:rgba(184,245,102,.1);color:var(--acid);border:1px solid rgba(184,245,102,.16)}
+        .ec2ps.be{background:rgba(93,224,230,.08);color:var(--cyan);border:1px solid rgba(93,224,230,.15)}
+        .ec2ps.db{background:rgba(245,166,35,.08);color:#f5a623;border:1px solid rgba(245,166,35,.15)}
+        .ec2ps.ai{background:rgba(167,139,250,.1);color:#a78bfa;border:1px solid rgba(167,139,250,.15)}
+
+        /* confidentiality strip */
+        .ent-notice{
+            display:flex;align-items:flex-start;gap:1rem;
+            padding:1rem 1.5rem;margin-top:2rem;
+            background:var(--ink-card);border:1px solid var(--border);
+            border-left:3px solid var(--acid);border-radius:var(--r);
+            font-size:.82rem;color:var(--t2);line-height:1.65;
+        }
+        .ent-notice svg{width:16px;height:16px;color:var(--acid);flex-shrink:0;margin-top:.18rem}
+
+        /* custom scrollbar */
+        ::-webkit-scrollbar{width:5px}
+        ::-webkit-scrollbar-track{background:var(--ink)}
+        ::-webkit-scrollbar-thumb{background:var(--ink-raised);border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:rgba(184,245,102,.3)}
+
+        /* enterprise stats row */
+        .ent-stats-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+        .ent-stat-box{
+            flex:1;min-width:100px;
+            background:var(--ink-card);border:1px solid var(--border);border-radius:var(--r);
+            padding:.85rem 1rem;text-align:center;
+        }
+        .ent-stat-box .esn{
+            display:block;font-family:var(--mono);font-size:1.55rem;
+            color:var(--acid);line-height:1;margin-bottom:.3rem;
+        }
+        .ent-stat-box .esl{font-size:.62rem;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+
+        /* ── LIGHT MODE OVERRIDES ─────────────────────────── */
+
+        /* Hero: hollow text stroke visible on light bg */
+        [data-theme="light"] .hero-name .hollow{
+            -webkit-text-stroke:1.5px rgba(30,30,30,0.2);
+        }
+
+        /* Education watermark numbers: white→ near-invisible on white card */
+        [data-theme="light"] .ec-num{color:rgba(0,0,0,.04)}
+
+        /* Enterprise card base */
+        [data-theme="light"] .ec2{background:#fff}
+        [data-theme="light"] .ec2:hover{box-shadow:0 24px 56px rgba(0,0,0,.14)}
+
+        /* Watermark number on light card */
+        [data-theme="light"] .ec2-num{color:rgba(0,0,0,.04)}
+        [data-theme="light"] .ec2:hover .ec2-num{color:rgba(50,140,50,.06)}
+
+        /* Carousel zone */
+        [data-theme="light"] .ec2-carousel{background:#d4d8e0}
+        [data-theme="light"] .ec2-slide{filter:brightness(.9) saturate(.85)}
+        [data-theme="light"] .ec2:hover .ec2-slide.active{filter:brightness(1.02) saturate(1.05)}
+
+        /* Placeholder panel */
+        [data-theme="light"] .ec2-ph{background:#d4d8e0}
+
+        /* Carousel nav dots: white dots invisible on light bg → dark */
+        [data-theme="light"] .ec2-dot{background:rgba(0,0,0,.22)}
+        [data-theme="light"] .ec2-dot.active{background:var(--acid)}
+
+        /* Slide-up preview panel: keep dark, fix text inside */
+        [data-theme="light"] .ec2-preview{
+            background:linear-gradient(175deg,rgba(10,13,20,.97) 0%,rgba(15,18,30,.99) 100%);
+        }
+        /* ec2-prev-name inherits var(--t1)=#111 in light → invisible on dark panel */
+        [data-theme="light"] .ec2-prev-name{color:rgba(237,234,226,.9)}
+
+        /* Notice + stat boxes */
+        [data-theme="light"] .ent-notice{background:#fff}
+        [data-theme="light"] .ent-stat-box{background:#fff}
+
+
         /* ── RESPONSIVE ─────────────────────────────────────── */
         @media(max-width:1024px){
             .hero-grid{grid-template-columns:1fr 260px;gap:3.5rem}
             .sk-layout{grid-template-columns:1fr}
             .proj-grid{grid-template-columns:1fr 1fr}
+            .ent-grid{grid-template-columns:1fr 1fr}
+            .ent-intro{grid-template-columns:1fr;gap:2.5rem}
+            .ent-grid{grid-template-columns:1fr 1fr}
         }
         @media(max-width:768px){
             .nav-links{display:none}
@@ -417,6 +708,7 @@
             .cta-row{justify-content:center}
             .hero-soc{justify-content:center}
             .proj-grid{grid-template-columns:1fr}
+            .ent-grid{grid-template-columns:1fr}
             .edu-grid{grid-template-columns:1fr}
             .cl{grid-template-columns:1fr}
             .form-row{grid-template-columns:1fr}
@@ -463,8 +755,9 @@
             <li><a href="#home" class="on"><span class="num">01.</span>Home</a></li>
             <li><a href="#skills"><span class="num">02.</span>Skills</a></li>
             <li><a href="#projects"><span class="num">03.</span>Projects</a></li>
-            <li><a href="#education"><span class="num">04.</span>Education</a></li>
-            <li><a href="#contact"><span class="num">05.</span>Contact</a></li>
+            <li><a href="#enterprise"><span class="num">04.</span>Enterprise</a></li>
+            <li><a href="#education"><span class="num">05.</span>Education</a></li>
+            <li><a href="#contact"><span class="num">06.</span>Contact</a></li>
         </ul>
         <div class="nav-acts">
             <button class="nbtn" id="themeBtn" title="Toggle theme">
@@ -490,6 +783,7 @@
         <li><a href="#home" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
         <li><a href="#skills" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Skills</a></li>
         <li><a href="#projects" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Projects</a></li>
+        <li><a href="#enterprise" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>Enterprise</a></li>
         <li><a href="#education" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Education</a></li>
         <li><a href="#contact" onclick="closeD()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact</a></li>
     </ul>
@@ -508,7 +802,7 @@
                     <span class="hollow">Ibrahim</span>
                 </h1>
                 <p class="hero-role">Full-Stack Engineer &nbsp;/&nbsp; AI Developer</p>
-                <p class="hero-bio">Results-driven developer specializing in scalable, high-performance web applications using React, Next.js, Node.js, and Python — with deep expertise in AI &amp; ML via TensorFlow and PyTorch. I transform ideas into production-ready intelligent systems.</p>
+                <p class="hero-bio">I am a results-driven Full-Stack Developer, specializing in scalable, high-performance web applications, using React, Next.js, Node.js, and Python. I leverage Python extensively in AI and Machine Learning, applying frameworks such as TensorFlow and PyTorch, to build intelligent systems that automate processes, enhance decision-making, and deliver measurable business impact. With a strong focus on clean architecture, performance optimization, and cutting-edge AI trends, including generative models, I transform ideas into reliable, production-ready solutions.</p>
                 <div class="cta-row">
                     <a href="#projects" class="btn-fill">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
@@ -540,7 +834,7 @@
                 <div class="stats">
                     <div class="stat"><span class="stat-n">5+</span><div class="stat-l">Years</div></div>
                     <div class="stat"><span class="stat-n">15+</span><div class="stat-l">Skills</div></div>
-                    <div class="stat"><span class="stat-n">5+</span><div class="stat-l">Projects</div></div>
+                    <div class="stat"><span class="stat-n">12+</span><div class="stat-l">Projects</div></div>
                 </div>
             </div>
         </div>
@@ -565,7 +859,7 @@
                     <div class="term-body">
                         <div class="tl"><span class="tp">$</span> <span class="tc">cat tech-stack.json</span></div>
                         <div class="tl tm">// Frontend</div>
-                        <div class="tl to">React · Vue · Angular · Next.js</div>
+                        <div class="tl to">React · Vue · Next.js · SQL</div>
                         <div class="tl tm">// Styling</div>
                         <div class="tl to">Tailwind · Bootstrap · CSS3</div>
                         <div class="tl tm">// Backend</div>
@@ -604,10 +898,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"><path d="M2 4l10 16L22 4h-4l-6 9.5L6 4z"/><path d="M6 4l6 9.5L18 4h-3L12 9 9 4z"/></svg>
                     <span>Vue.js</span>
                 </div>
-                <!-- Angular -->
+                <!-- SQL -->
                 <div class="sk">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"><path d="M12 2L3 6l1.5 12.5L12 22l7.5-3.5L21 6z"/><path d="M9 15l3-8 3 8M10.2 13h3.6" stroke-linecap="round"/></svg>
-                    <span>Angular</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    <span>SQL</span>
                 </div>
                 <!-- Tailwind -->
                 <div class="sk">
@@ -679,7 +973,7 @@
                         <a href="https://moibrahim0115.github.io/-FitChallenge/" target="_blank" rel="noopener noreferrer" class="plink hi">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo
                         </a>
-                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-frontenddevelopment-javascript-activity-7316146792549498880-YKiC" target="_blank" rel="noopener noreferrer" class="plink">
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-frontenddevelopment-javascript-activity-7316146792549498880-YKiC?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details
                         </a>
                     </div>
@@ -694,7 +988,7 @@
                     <div class="pt-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
                     <div class="pl">
                         <a href="https://moibrahim0115.github.io/Anjiz/" target="_blank" rel="noopener noreferrer" class="plink hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a>
-                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-taskmanagement-productivity-activity-7339552506542206976-sPQF" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-javascript-css3-activity-7346767811299422208-S4oE?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
                     </div>
                 </div>
             </div>
@@ -707,7 +1001,7 @@
                     <div class="pt-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
                     <div class="pl">
                         <a href="https://capitalgardens.github.io/mo/" target="_blank" rel="noopener noreferrer" class="plink hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a>
-                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdesign-portfolio-development-activity-7304158875086131201-1Ypb" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-realestate-frontend-activity-7304158875086131201-Fez1?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
                     </div>
                 </div>
             </div>
@@ -720,7 +1014,7 @@
                     <div class="pt-tags"><span class="tag">HTML</span><span class="tag">CSS Grid</span><span class="tag">JavaScript</span><span class="tag">UI/UX</span></div>
                     <div class="pl">
                         <a href="https://bigbo22115.github.io/voss/" target="_blank" rel="noopener noreferrer" class="plink hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a>
-                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-ui-ux-activity-7301672636776898563-R8XX" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-voss-perfumes-activity-7301672636776898563-3cd3?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
                     </div>
                 </div>
             </div>
@@ -733,7 +1027,31 @@
                     <div class="pt-tags"><span class="tag">HTML</span><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">IndexedDB</span></div>
                     <div class="pl">
                         <a href="https://moibrahim0115.github.io/archive/" target="_blank" rel="noopener noreferrer" class="plink hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a>
-                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_electronicarchiving-webdevelopment-offlinefirst-activity-7300790202510311426-aYBR" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_electronicarchiving-webdevelopment-offlinefirst-activity-7300790202510311426-aYBR?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wallet Guard -->
+            <div class="pc fi" style="transition-delay:.44s">
+                <div class="pt">
+                    <img src="wallet.png" alt="Wallet Guard">
+                    <span class="pbadge">Finance</span>
+                </div>
+                <div class="pb">
+                    <h3 class="pt-title">Wallet Guard</h3>
+                    <p class="pt-desc">A comprehensive personal finance tracker — monitor income, expenses, monthly installments, and budgets with a smart analytical dashboard covering the last 3 months. Fully offline-first with WhatsApp export support, bilingual UI (AR/EN), and dark mode.</p>
+                    <div class="pt-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">Tailwind</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">IndexedDB</span>
+                        <span class="tag">PWA</span>
+                    </div>
+                    <div class="pl">
+                        <a href="https://moibrahim0115.github.io/wallet/" target="_blank" rel="noopener noreferrer" class="plink hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a>
+                        <a href="https://www.linkedin.com/posts/mohamed-ibrahim-9b7192265_webdevelopment-javascript-personalfinance-share-7438295099630968833-xnGT?utm_source=share&utm_medium=member_desktop&rcm=ACoAAED9CBsBMGwHglIHTHxIzaIfWrtfptYozZ8" target="_blank" rel="noopener noreferrer" class="plink"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Details</a>
+   
                     </div>
                 </div>
             </div>
@@ -741,11 +1059,298 @@
     </div>
 </section>
 
+<!-- ═══ ENTERPRISE SYSTEMS ═══ -->
+<section id="enterprise">
+    <div class="wrap">
+        <div class="sh fi">
+            <span class="sh-code">04 — Enterprise</span>
+            <div class="sh-rule"></div>
+            <h2 class="sh-title">Enterprise Systems</h2>
+        </div>
+
+        <!-- Intro -->
+        <div class="ent-intro fi">
+            <p>Beyond open-source work, I have designed and engineered <strong style="color:var(--t1)">6 full-stack enterprise web systems</strong> currently running on private internal servers with official institutional certification. Each system was built from the ground up to production standards: security — reliability — scalability.</p>
+            <div class="ent-stats-row">
+                <div class="ent-stat-box"><span class="esn">6</span><span class="esl">Systems Built</span></div>
+                <div class="ent-stat-box"><span class="esn">100%</span><span class="esl">Full-Stack</span></div>
+                <div class="ent-stat-box"><span class="esn">Live</span><span class="esl">In Production</span></div>
+                <div class="ent-stat-box"><span class="esn">3+</span><span class="esl">AI-Powered</span></div>
+            </div>
+            <div class="ent-pills">
+                <span class="ent-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Production Deployed</span>
+                <span class="ent-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Institutionally Certified</span>
+                <span class="ent-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Internal Servers Only</span>
+                <span class="ent-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>AI-Powered</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+                <!-- Cards Grid -->
+        <div class="ent-grid">
+
+            <!-- 01 Complaints & Document Intelligence -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#b8f566,#5de0e6);transition-delay:0s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">01</div>
+                <div class="ec2-carousel" data-id="1">
+                    <img class="ec2-slide active" src="enterprise-1.png" alt="Screen 1">
+                    <img class="ec2-slide" src="docuflex1.png" alt="Screen 2">
+                    <img class="ec2-slide" src="docuflex2.png" alt="Screen 3">
+                    <img class="ec2-slide" src="docuflex3.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-1-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-1-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#b8f566" stroke-width="1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style="color:#b8f566">enterprise-1.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">AI + Docs</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">DocuFlex</h3>
+                    <p class="ec2-desc">Enterprise platform for complaint tracking and digital archiving, powered by an AI engine that analyzes text, extracts insights, and auto-summarizes legal documents.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack + AI</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">01</span></div>
+                    <div class="ec2-prev-name">Intelligent Complaints &amp; Document Management</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Smart document upload, auto-classification &amp; full-text search engine</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>AI-powered complaint analysis with NLP summarization pipeline</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Real-time status dashboard with complete audit trail logging</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Automated periodic reporting &amp; instant notification system</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">React</span><span class="ec2ps be">Node.js</span><span class="ec2ps be">Python</span><span class="ec2ps db">PostgreSQL</span><span class="ec2ps ai">TensorFlow</span><span class="ec2ps ai">NLP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 Technical Assets & Inventory -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#f5a623,#fb923c);transition-delay:.1s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">02</div>
+                <div class="ec2-carousel" data-id="2">
+                    <img class="ec2-slide active" src="enterprise-2.png" alt="Screen 1">
+                    <img class="ec2-slide" src="stocktech1.png" alt="Screen 2">
+                    <img class="ec2-slide" src="stocktech2.png" alt="Screen 3">
+                    <img class="ec2-slide" src="enterprise-2-4.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-2-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-2-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><span style="color:#f5a623">enterprise-2.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">Assets &amp; Inventory</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">Stock Tech</h3>
+                    <p class="ec2-desc">Professional platform for managing technical assets — printers, ink, devices — with real-time stock visibility, intelligent reorder alerts, and predictive procurement analytics.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">02</span></div>
+                    <div class="ec2-prev-name">Technical Assets &amp; Inventory Management</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Real-time monitoring of printers, ink cartridges &amp; hardware stock</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>Smart low-stock alerts with automated escalation workflows</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Predictive AI analytics for optimized procurement decisions</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Full asset lifecycle tracking from acquisition to disposal</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">Vue.js</span><span class="ec2ps fe">Chart.js</span><span class="ec2ps be">Node.js</span><span class="ec2ps db">SQLite</span><span class="ec2ps ai">Predictive AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 Enterprise Contact & CRM -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#34d399,#5de0e6);transition-delay:.2s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">03</div>
+                <div class="ec2-carousel" data-id="3">
+                    <img class="ec2-slide active" src="enterprise-3.png" alt="Screen 1">
+                    <img class="ec2-slide" src="enterprise-3-2.png" alt="Screen 2">
+                    <img class="ec2-slide" src="enterprise-3-3.png" alt="Screen 3">
+                    <img class="ec2-slide" src="enterprise-3-4.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-3-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-3-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span style="color:#34d399">enterprise-3.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">CRM / Contacts</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">PrestigeNotes</h3>
+                    <p class="ec2-desc">Advanced contact management system for organizing institutional directories with rapid search, intelligent multi-criteria classification, and export capabilities.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">03</span></div>
+                    <div class="ec2-prev-name">Enterprise Contact &amp; CRM Platform</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Centralized directory for individuals, departments &amp; organizations</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>Lightning-fast search with multi-parameter smart filtering</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Auto-classification engine with department clustering</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Contact export and formatted report printing suite</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">React</span><span class="ec2ps fe">Tailwind</span><span class="ec2ps be">Node.js</span><span class="ec2ps db">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 Social Media Performance Analytics -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#a78bfa,#60a5fa);transition-delay:.3s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">04</div>
+                <div class="ec2-carousel" data-id="4">
+                    <img class="ec2-slide active" src="enterprise-4.png" alt="Screen 1">
+                    <img class="ec2-slide" src="enterprise-4-2.png" alt="Screen 2">
+                    <img class="ec2-slide" src="enterprise-4-3.png" alt="Screen 3">
+                    <img class="ec2-slide" src="enterprise-4-4.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-4-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-4-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span style="color:#a78bfa">enterprise-4.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">Analytics</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">Social Media Performance Analytics</h3>
+                    <p class="ec2-desc">Comprehensive monitoring platform for tracking social pages via smart keywords, delivering precision insights and interactive reports that drive strategic decisions.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack + AI</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">04</span></div>
+                    <div class="ec2-prev-name">Social Media Performance Analytics</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Keyword-based social page monitoring with sentiment analysis</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>Interactive analytics dashboard with granular KPI metrics</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Custom-branded reports with period-over-period comparisons</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Trend tracking &amp; real-time performance benchmarking</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">Next.js</span><span class="ec2ps fe">D3.js</span><span class="ec2ps be">Python</span><span class="ec2ps be">FastAPI</span><span class="ec2ps db">PostgreSQL</span><span class="ec2ps ai">NLP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05 HR Attendance & Workforce Management -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#f472b6,#fb7185);transition-delay:.4s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">05</div>
+                <div class="ec2-carousel" data-id="5">
+                    <img class="ec2-slide active" src="enterprise-5.png" alt="Screen 1">
+                    <img class="ec2-slide" src="enterprise-5-2.png" alt="Screen 2">
+                    <img class="ec2-slide" src="enterprise-5-3.png" alt="Screen 3">
+                    <img class="ec2-slide" src="enterprise-5-4.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-5-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-5-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span style="color:#f472b6">enterprise-5.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">HR / Attendance</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">HR Attendance &amp; Workforce Management</h3>
+                    <p class="ec2-desc">Comprehensive system for tracking employee attendance with real-time precision, automated work-hour calculation, absence management, and a full HR reporting suite.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">05</span></div>
+                    <div class="ec2-prev-name">HR Attendance &amp; Workforce Management</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Real-time check-in/out tracking for all staff members</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>Automated calculation of hours, absences &amp; late arrivals</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Executive HR dashboard with exportable periodic reports</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Leave requests &amp; multi-level authorization workflow</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">Tailwind</span><span class="ec2ps be">Node.js</span><span class="ec2ps be">REST API</span><span class="ec2ps db">PostgreSQL</span><span class="ec2ps db">SQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 06 Executive Intelligence Dashboard -->
+            <div class="ec2 fi" style="--ec2-bar:linear-gradient(90deg,#22d3ee,#818cf8);transition-delay:.5s">
+                <div class="ec2-bar"></div>
+                <div class="ec2-num">06</div>
+                <div class="ec2-carousel" data-id="6">
+                    <img class="ec2-slide active" src="enterprise-6.png" alt="Screen 1">
+                    <img class="ec2-slide" src="enterprise-6-2.png" alt="Screen 2">
+                    <img class="ec2-slide" src="enterprise-6-3.png" alt="Screen 3">
+                    <img class="ec2-slide" src="enterprise-6-4.png" alt="Screen 4">
+                    <img class="ec2-slide" src="enterprise-6-5.png" alt="Screen 5">
+                    <img class="ec2-slide" src="enterprise-6-6.png" alt="Screen 6">
+                    <div class="ec2-ph"><svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><path d="M14 15l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="color:#22d3ee">enterprise-6.png</span></div>
+                    <div class="ec2-veil"><span class="ec2-live"><span class="ec2-live-dot"></span>Live &#183; Internal</span></div>
+                    <span class="ec2-tag">Exec Dashboard</span>
+                    <div class="ec2-dots"></div>
+                    <button class="ec2-arrow ec2-prev">&#8249;</button>
+                    <button class="ec2-arrow ec2-next">&#8250;</button>
+                </div>
+                <div class="ec2-body">
+                    <h3 class="ec2-title">Executive Intelligence Dashboard</h3>
+                    <p class="ec2-desc">Centralized BI platform aggregating all internal systems into a unified 360&#176; view, with ML-powered insights, interactive visualizations, and executive-level strategic reporting.</p>
+                    <div class="ec2-meta">
+                        <span class="ec2-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2025</span>
+                        <span class="ec2-scope">Full-Stack + AI</span>
+                    </div>
+                </div>
+                <div class="ec2-preview">
+                    <div class="ec2-prev-header"><span class="ec2-prev-label">System Overview</span><span class="ec2-prev-num">06</span></div>
+                    <div class="ec2-prev-name">Executive Intelligence Dashboard</div>
+                    <div class="ec2-preview-features">
+                        <div class="ec2-pf"><span class="ec2-pf-n">01</span><span>Unified KPI dashboard aggregating all internal data sources</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">02</span><span>Interactive visualizations with 20+ customizable chart types</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">03</span><span>Automated smart reports with PDF export &amp; scheduling</span></div>
+                        <div class="ec2-pf"><span class="ec2-pf-n">04</span><span>Cross-system integration with ML-driven decision insights</span></div>
+                    </div>
+                    <div class="ec2-preview-stack">
+                        <span class="ec2ps fe">React</span><span class="ec2ps fe">Recharts</span><span class="ec2ps be">Python</span><span class="ec2ps be">FastAPI</span><span class="ec2ps db">PostgreSQL</span><span class="ec2ps ai">ML Insights</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Confidentiality Notice -->
+        <div class="ent-notice fi">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span>All systems above are deployed on private internal servers and actively used in live institutional environments. Screenshots represent the actual application interfaces. Live demos are unavailable due to the confidential nature of internal deployment.</span>
+        </div>
+
+    </div>
+</section>
+
 <!-- ═══ EDUCATION ═══ -->
 <section id="education">
     <div class="wrap">
         <div class="sh fi">
-            <span class="sh-code">04 — Education</span>
+            <span class="sh-code">05 — Education</span>
             <div class="sh-rule"></div>
             <h2 class="sh-title">Education Log</h2>
         </div>
@@ -772,7 +1377,7 @@
 <section id="contact">
     <div class="wrap">
         <div class="sh fi">
-            <span class="sh-code">05 — Contact</span>
+            <span class="sh-code">06 — Contact</span>
             <div class="sh-rule"></div>
             <h2 class="sh-title">Get in Touch</h2>
         </div>
@@ -816,11 +1421,14 @@
 
 </main>
 
+
+
+
 <footer>
     <div class="wrap">
         <div class="foot">
             <span class="foot-logo">mo.ibrahim_</span>
-            <p class="foot-copy">© 2025 <span>Mohamed Ibrahim</span> — All rights reserved</p>
+            <p class="foot-copy">&copy; 2025 <span>Mohamed Ibrahim</span> &mdash; All rights reserved</p>
             <div class="foot-soc">
                 <a href="https://github.com/moibrahim0115" target="_blank" rel="noopener noreferrer" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
                 <a href="https://linkedin.com/in/mohamed-ibrahim-9b7192265" target="_blank" rel="noopener noreferrer" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
@@ -896,6 +1504,48 @@ document.querySelectorAll('.fi').forEach(el=>{
     new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');});},{threshold:0.08}).observe(el);
 });
 
+/* ENTERPRISE CAROUSEL */
+document.querySelectorAll('.ec2-carousel').forEach(car=>{
+    const allImgs=Array.from(car.querySelectorAll('.ec2-slide'));
+    const ph=car.querySelector('.ec2-ph');
+    const dotsEl=car.querySelector('.ec2-dots');
+    let slides=[],cur=0,timer;
+
+    Promise.allSettled(allImgs.map(img=>new Promise(res=>{
+        if(img.complete)res(img.naturalWidth>0);
+        else{img.onload=()=>res(true);img.onerror=()=>res(false);}
+    }))).then(results=>{
+        allImgs.forEach((img,i)=>{
+            if(results[i].value===true)slides.push(img);
+            else img.remove();
+        });
+        if(slides.length===0){if(ph)ph.style.display='flex';return;}
+        if(ph)ph.style.display='none';
+        slides.forEach(s=>s.classList.remove('active'));
+        slides[0].classList.add('active');
+        if(slides.length>1){
+            slides.forEach((_,i)=>{
+                const dot=document.createElement('button');
+                dot.className='ec2-dot'+(i===0?' active':'');
+                dot.addEventListener('click',e=>{e.stopPropagation();go(i);reset();});
+                dotsEl.appendChild(dot);
+            });
+        }
+        function go(n){
+            slides[cur].classList.remove('active');
+            dotsEl.querySelectorAll('.ec2-dot')[cur]?.classList.remove('active');
+            cur=(n+slides.length)%slides.length;
+            slides[cur].classList.add('active');
+            dotsEl.querySelectorAll('.ec2-dot')[cur]?.classList.add('active');
+        }
+        car.querySelector('.ec2-prev').addEventListener('click',e=>{e.stopPropagation();go(cur-1);reset();});
+        car.querySelector('.ec2-next').addEventListener('click',e=>{e.stopPropagation();go(cur+1);reset();});
+        function start(){if(slides.length>1)timer=setInterval(()=>go(cur+1),3500);}
+        function reset(){clearInterval(timer);start();}
+        new IntersectionObserver(([e])=>{if(e.isIntersecting)start();else clearInterval(timer);}).observe(car);
+    });
+});
+
 /* FORM */
 const form=document.getElementById('cForm'),sendBtn=document.getElementById('sendBtn'),notif=document.getElementById('notif');
 function toast(msg,type,icon){
@@ -906,7 +1556,7 @@ function toast(msg,type,icon){
 form.addEventListener('submit',async(e)=>{
     e.preventDefault();
     const orig=sendBtn.innerHTML;
-    sendBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/></svg> Sending…';
+    sendBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/></svg> Sending&hellip;';
     sendBtn.disabled=true;
     try{
         await fetch('https://formsubmit.co/moibrahim115@outlook.com',{method:'POST',body:new FormData(form),mode:'no-cors'});
