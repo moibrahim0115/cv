@@ -690,36 +690,124 @@
 
 
         /* ── RESPONSIVE ─────────────────────────────────────── */
+        /* ── TABLET ≤1024px ─────────────────────────────────── */
         @media(max-width:1024px){
             .hero-grid{grid-template-columns:1fr 260px;gap:3.5rem}
             .sk-layout{grid-template-columns:1fr}
             .proj-grid{grid-template-columns:1fr 1fr}
             .ent-grid{grid-template-columns:1fr 1fr}
-            .ent-intro{grid-template-columns:1fr;gap:2.5rem}
-            .ent-grid{grid-template-columns:1fr 1fr}
         }
+
+        /* ── MOBILE ≤768px ──────────────────────────────────── */
         @media(max-width:768px){
+            /* Nav */
             .nav-links{display:none}
             .burger{display:flex}
-            .drawer{display:block}
+
+            /* Hero */
             .hero-grid{grid-template-columns:1fr;text-align:center}
-            .photo-col{order:-1;max-width:240px;margin:0 auto}
-            .hero-bio{border-left:none;border-top:2px solid var(--acid);padding-left:0;padding-top:.9rem}
+            .photo-col{order:-1;max-width:220px;margin:0 auto}
+            .hero-bio{border-left:none;border-top:2px solid var(--acid);padding-left:0;padding-top:.9rem;text-align:left}
             .cta-row{justify-content:center}
             .hero-soc{justify-content:center}
+            .stats{grid-template-columns:repeat(3,1fr)}
+
+            /* Sections */
+            section{padding:4rem 0}
+            .sh{flex-direction:column;align-items:flex-start;gap:.5rem;margin-bottom:2.5rem}
+            .sh-rule{display:none}
+            .sh-title{font-size:clamp(1.75rem,7vw,2.5rem);white-space:normal}
+
+            /* Projects */
             .proj-grid{grid-template-columns:1fr}
+
+            /* Enterprise grid: 1 col */
             .ent-grid{grid-template-columns:1fr}
+
+            /* Enterprise stats row: 2×2 grid */
+            .ent-stats-row{grid-template-columns:1fr 1fr;gap:.7rem}
+
+            /* Carousel controls: always visible on touch */
+            .ec2-arrow{opacity:.85;width:28px;height:28px;font-size:15px}
+            .ec2-dots{opacity:1}
+
+            /* Preview panel: static block below card body (no hover on touch) */
+            .ec2-preview{
+                position:static;
+                transform:none !important;
+                padding:1.2rem 1.3rem 1.4rem;
+                background:rgba(8,11,16,.97);
+                border-top:3px solid rgba(184,245,102,.35);
+            }
+            /* hide pseudo-elements — on static they'd escape to cover the whole card */
+            .ec2-preview::before,.ec2-preview::after{display:none}
+            [data-theme="light"] .ec2-preview{
+                background:linear-gradient(175deg,rgba(10,13,20,.97),rgba(15,18,30,.99));
+            }
+            .ec2-prev-num{font-size:2.2rem}
+            /* border-radius on preview bottom to match card corners */
+            .ec2-preview{border-radius:0 0 var(--r-lg) var(--r-lg)}
+
+            /* Education */
             .edu-grid{grid-template-columns:1fr}
+
+            /* Contact */
             .cl{grid-template-columns:1fr}
             .form-row{grid-template-columns:1fr}
-            .sh{flex-direction:column;align-items:flex-start;gap:.6rem}
-            .sh-rule{display:none}
-            section{padding:4.5rem 0}
+
+            /* Footer: stack vertically + center */
+            .foot{flex-direction:column;align-items:center;text-align:center;gap:1rem}
+            .foot-copy{order:2}
+            .foot-soc{order:3}
         }
+
+        /* Touch devices: neutralize hover-only lifts */
+        @media(hover:none){
+            .ec2:hover{transform:none;box-shadow:none}
+            .ec2:hover .ec2-slide.active{filter:brightness(.8) saturate(.82)}
+            .ec2:hover .ec2-num{color:rgba(255,255,255,.025)}
+            .pc:hover{transform:none;box-shadow:none}
+        }
+
+        /* ── SMALL MOBILE ≤480px ────────────────────────────── */
         @media(max-width:480px){
-            .wrap{padding:0 1.25rem}
-            .hero-name{font-size:2.8rem}
-            .cf{padding:1.5rem}
+            .wrap{padding:0 1.1rem}
+            .hero-name{font-size:2.65rem}
+            .hero-bio{font-size:.88rem}
+            .cf{padding:1.4rem 1.2rem}
+
+            /* Section header */
+            .sh{margin-bottom:2rem}
+
+            /* Enterprise stats */
+            .ent-stats-row{gap:.55rem}
+            .ent-stat-box{padding:.65rem .7rem}
+            .ent-stat-box .esn{font-size:1.2rem}
+            .ent-pill{font-size:.62rem;padding:.25rem .62rem}
+            .ent-pills{gap:.45rem}
+
+            /* Enterprise card */
+            .ec2-body{padding:1rem 1.1rem 1.1rem;gap:.45rem}
+            .ec2-title{font-size:.93rem}
+            .ec2-desc{font-size:.79rem}
+
+            /* Preview panel on mobile */
+            .ec2-preview{padding:.95rem 1.05rem 1.05rem}
+            .ec2-pf{font-size:.72rem;gap:.5rem}
+            .ec2-pf-n{font-size:.54rem}
+            .ec2-prev-num{display:none}
+            .ec2-prev-name{font-size:.86rem}
+            .ec2-prev-label{font-size:.54rem}
+            .ec2ps{font-size:.58rem;padding:.12rem .42rem}
+
+            /* Carousel controls */
+            .ec2-arrow{width:24px;height:24px;font-size:13px}
+
+            /* Footer */
+            footer{padding:1.75rem 0}
+            .foot-logo{font-size:.75rem}
+            .foot-copy{font-size:.65rem}
+            .foot-soc a{width:34px;height:34px}
         }
         [data-theme="light"] .term{background:#1a1d28}
         [data-theme="light"] .pc,[data-theme="light"] .ec,
@@ -979,6 +1067,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Anjiz -->
             <div class="pc fi" style="transition-delay:.08s">
                 <div class="pt"><img src="anjiz.png" alt="Anjiz"><span class="pbadge">Productivity</span></div>
